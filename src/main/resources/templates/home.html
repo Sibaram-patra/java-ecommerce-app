@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>E-commerce Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body { font-family: sans-serif; background-color: #f8f8f8; color: #333; margin: 0; padding: 0; }
         header { background-color: #4CAF50; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        header a { color: white; text-decoration: none; margin-left: 20px; font-weight: bold; }
+        header .brand { font-size: 1.5em; font-weight: bold; }
+        header .nav-links { display: flex; gap: 20px; align-items: center; }
+        header a { color: white; text-decoration: none; font-weight: bold; }
+        header a:hover { text-decoration: underline; }
+        .logout-form { display: inline; }
+        .logout-btn { background: none; border: none; color: white; font-weight: bold; cursor: pointer; font-size: 1em; padding: 0; }
+        .logout-btn:hover { text-decoration: underline; }
         h1 { text-align: center; color: #4CAF50; margin: 30px 0 20px 0; }
         
-        /* Mobile First: Single column product grid */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 15px; }
         .product-card { background-color: white; border: 1px solid #ddd; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 8px; text-align: center; }
         .product-card h2 { color: #333; font-size: 1.2em; margin-top: 0; }
         .product-card button { background-color: #007bff; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; width: 100%; margin-top: 10px; }
         
-        /* Desktop: Maximize grid efficiency */
         @media (min-width: 768px) {
             .product-grid { grid-template-columns: repeat(4, 1fr); max-width: 1200px; margin: 0 auto; }
         }
@@ -23,12 +27,22 @@
 </head>
 <body>
     <header>
-        <span>E-Shop</span>
-        <div>
+        <span class="brand">E-Shop</span>
+        <div class="nav-links">
             <a th:href="@{/cart}">Cart</a>
-            <a th:href="@{/login}">Login</a>
+            <a th:href="@{/orders}">Orders</a>
+            
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post" class="logout-form">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}">Login</a>
+            </div>
         </div>
     </header>
+    
     <h1>Featured Products</h1>
     <div class="product-grid">
         <div th:each="product : ${products}" class="product-card">

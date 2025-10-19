@@ -12,13 +12,22 @@
         button { width: 100%; background-color: #007bff; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; margin-top: 15px; }
         button:hover { background-color: #0056b3; }
         .message { text-align: center; margin-top: 20px; }
-        .success { color: green; font-weight: bold; }
+        .success { color: green; font-weight: bold; margin-bottom: 15px; }
+        .error { color: red; font-weight: bold; margin-bottom: 15px; padding: 10px; background-color: #ffe6e6; border: 1px solid #ff0000; border-radius: 5px; }
     </style>
 </head>
 <body>
     <div class="login-box">
         <h1>User Login</h1>
-        <div th:if="${param.registered}" class="message success">Registration successful! Please log in.</div>
+
+        <div th:if="${param.registered}" class="success">Registration successful! Please log in.</div>
+        
+
+        <div th:if="${param.error}" class="error">Invalid username or password. Please try again.</div>
+        
+
+        <div th:if="${param.logout}" class="success">You have been logged out successfully.</div>
+        
         <form method="post" action="/login"> 
             <div>
                 <label for="username">Username:</label>

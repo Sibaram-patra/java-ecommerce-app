@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User List</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f0f5; color: #333; margin: 0; padding: 15px; }
+        h1 { color: #5c7cfa; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        .actions a { background-color: #28a745; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; margin-bottom: 20px; display: block; width: fit-content; }
+        
+        /* Mobile First: Default is stacked list for small screens */
+        .user-list-card { background-color: white; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .user-list-card strong { display: inline-block; width: 80px; color: #555; }
+        .card-action a { color: #5c7cfa; text-decoration: none; margin-right: 10px; }
+
+        /* Desktop View: Display as a traditional table */
+        table { display: none; width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #e6e9ff; color: #333; }
+        
+        @media (min-width: 768px) {
+            .user-list-card { display: none; }
+            table { display: table; }
+        }
+    </style>
+</head>
+<body>
+    <h1>All System Users</h1>
+    <div class="actions"><a th:href="@{/users/new}">Create New User</a></div>
+    
+    <div th:each="user : ${users}" class="user-list-card">
+        <div><strong>ID:</strong> <span th:text="${user.id}">1</span></div>
+        <div><strong>User:</strong> <span th:text="${user.username}">john.doe</span></div>
+        <div><strong>Role:</strong> <span th:text="${user.role}">USER</span></div>
+        <div class="card-action">
+            <a th:href="@{/users/{id}/edit(id=${user.id})}">View/Edit</a> 
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}">1</td>
+                <td th:text="${user.username}">john.doe</td>
+                <td th:text="${user.role}">USER</td>
+                <td>
+                    <a th:href="@{/users/{id}/edit(id=${user.id})}">View/Edit</a> 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

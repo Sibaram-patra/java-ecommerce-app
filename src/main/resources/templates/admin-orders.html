@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - All Orders</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f0f5; color: #333; margin: 0; padding: 15px; }
+        h1 { color: #007bff; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        .back-link { display: block; margin-bottom: 20px; color: #007bff; text-decoration: none; }
+
+        /* Mobile First: Default is stacked list for small screens */
+        .order-card { background-color: white; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .order-card strong { display: inline-block; width: 100px; color: #555; }
+        .status-badge { padding: 3px 8px; border-radius: 3px; font-weight: bold; font-size: 0.8em; }
+        .status-badge.PENDING { background-color: #ffc107; color: #333; }
+        .status-badge.COMPLETED { background-color: #28a745; color: white; }
+
+        /* Desktop View: Display as a traditional table */
+        table { display: none; width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #e0f0ff; color: #333; }
+        
+        @media (min-width: 768px) {
+            .order-card { display: none; }
+            table { display: table; }
+        }
+    </style>
+</head>
+<body>
+    <h1>All System Orders</h1>
+    <a th:href="@{/admin/dashboard}" class="back-link">← Back to Dashboard</a>
+
+    <div th:each="order : ${orders}" class="order-card">
+        <div><strong>ID:</strong> <span th:text="${order.id}">1001</span></div>
+        <div><strong>Customer:</strong> <span th:text="${order.user.username}">User-123</span></div> 
+        <div><strong>Date:</strong> <span th:text="${order.orderDate}">2025-01-01</span></div>
+        <div><strong>Status:</strong> 
+            <span th:text="${order.status}" th:classappend="${order.status} == 'PENDING' ? 'PENDING' : 'COMPLETED'" class="status-badge">PENDING</span>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <th>Date Placed</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}">1001</td>
+                <td th:text="${order.user.username}">User-123</td> 
+                <td th:text="${order.orderDate}">2025-01-01</td>
+                <td><span th:text="${order.status}" th:classappend="${order.status} == 'PENDING' ? 'PENDING' : 'COMPLETED'" class="status-badge">COMPLETED</span></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

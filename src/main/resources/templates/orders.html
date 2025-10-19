@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; background-color: #f8f8f8; color: #333; margin: 0; padding: 15px; }
+        h1 { color: #5cb85c; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        
+        /* Mobile Card View Styles */
+        .order-card { background-color: white; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .order-card div { margin-bottom: 5px; }
+        .order-card strong { display: inline-block; width: 90px; color: #555; }
+        
+        /* Desktop Table View Styles */
+        table { display: none; width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 1000px; margin: 20px auto; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #d9edf7; color: #31708f; }
+
+        /* Media Query for Desktop */
+        @media (min-width: 768px) {
+            .order-card { display: none; }
+            table { display: table; }
+        }
+    </style>
+</head>
+<body>
+    <h1>My Order History</h1>
+    
+    <div th:each="order : ${orders}" class="order-card">
+        <div><strong>Order ID:</strong> <span th:text="${order.id}">1001</span></div>
+        <div><strong>Date:</strong> <span th:text="${order.orderDate}">2025-01-01</span></div>
+        <div><strong>Status:</strong> <span th:text="${order.status}">PENDING</span></div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date Placed</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}">1001</td>
+                <td th:text="${order.orderDate}">2025-01-01</td>
+                <td th:text="${order.status}">PENDING</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

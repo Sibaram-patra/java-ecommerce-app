@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Shopping Cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; background-color: #f8f8f8; color: #333; margin: 0; padding: 15px; }
+        h1 { color: #007bff; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        
+        /* Mobile Card View Styles */
+        .cart-card { background-color: white; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .cart-card div { margin-bottom: 5px; }
+        .cart-card strong { display: inline-block; width: 80px; color: #555; }
+        
+        /* Desktop Table View Styles */
+        table { display: none; width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 1000px; margin: 20px auto; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; color: #555; }
+        
+        .checkout-area { text-align: center; margin-top: 20px; padding: 15px; }
+        .checkout-area button { background-color: #28a745; color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-size: 1.1em; display: block; width: 100%; max-width: 300px; margin: 10px auto; }
+
+        /* Media Query for Desktop */
+        @media (min-width: 768px) {
+            .cart-card { display: none; }
+            table { display: table; }
+            .checkout-area { text-align: right; max-width: 1000px; margin: 20px auto; }
+            .checkout-area button { display: inline-block; width: auto; margin-left: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    
+    <div th:each="item : ${cartItems}" class="cart-card">
+        <div><strong>Product:</strong> <span th:text="${item.product.name}">Product Name</span></div>
+        <div><strong>Quantity:</strong> <span th:text="${item.quantity}">1</span></div>
+        <div><strong>Price:</strong> $<span th:text="${item.product.price}">10.00</span></div>
+        <div><strong>Subtotal:</strong> $<span th:text="${item.product.price * item.quantity}">10.00</span></div>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td th:text="${item.product.name}">Product Name</td>
+                <td th:text="${item.quantity}">1</td>
+                <td>$<span th:text="${item.product.price}">10.00</span></td>
+                <td>$<span th:text="${item.product.price * item.quantity}">10.00</span></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="checkout-area">
+        <a th:href="@{/products}">Continue Shopping</a>
+        <form th:action="@{/orders/place}" method="post" style="display:inline;">
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+</body>
+</html>

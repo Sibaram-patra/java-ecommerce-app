@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${product.name} + ' - Details'"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; background-color: #f8f8f8; color: #333; margin: 0; padding: 15px; }
+        .product-detail-container { background-color: white; padding: 20px; margin: 15px auto; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 900px; }
+        h1 { color: #4CAF50; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        .product-info p { line-height: 1.6; }
+        .product-info strong { color: #e67e22; font-size: 1.2em; }
+        form { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        form label { font-weight: bold; }
+        form input[type="number"] { padding: 10px; width: 100%; max-width: 80px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        form button { background-color: #007bff; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 5px; font-size: 1em; }
+        
+        /* Desktop layout */
+        @media (min-width: 768px) {
+            .product-info form { flex-direction: row; align-items: center; }
+            form input[type="number"] { max-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+    <a th:href="@{/products}">← Back to Catalog</a>
+    <div class="product-detail-container">
+        <h1 th:text="${product.name}">Product Name Placeholder</h1>
+        <div class="product-info">
+            <p><strong>Price:</strong> $<span th:text="${product.price}">199.99</span></p>
+            <p th:text="${product.description}">A detailed description of the amazing product.</p>
+            <form th:action="@{/cart/add}" method="post">
+                <input type="hidden" name="productId" th:value="${product.id}" />
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" required/>
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

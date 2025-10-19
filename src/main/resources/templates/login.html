@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; background-color: #f2f2f2; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .login-box { background-color: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; max-width: 350px; }
+        h1 { text-align: center; color: #333; margin-bottom: 25px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; background-color: #007bff; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; margin-top: 15px; }
+        button:hover { background-color: #0056b3; }
+        .message { text-align: center; margin-top: 20px; }
+        .success { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>User Login</h1>
+        <div th:if="${param.registered}" class="message success">Registration successful! Please log in.</div>
+        <form method="post" action="/login"> 
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required/>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required/>
+            </div>
+            <button type="submit">Log In</button>
+        </form>
+        <p class="message">Don't have an account? <a th:href="@{/register}">Register here</a></p>
+    </div>
+</body>
+</html>

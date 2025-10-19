@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Form</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f2f2f2; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .form-container { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h1 { text-align: center; color: #5c7cfa; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input[type="text"], input[type="email"], input[type="password"], select { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; background-color: #5c7cfa; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; margin-top: 10px; }
+        button:hover { background-color: #4466d8; }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #5c7cfa; text-decoration: none; }
+        .note { font-size: 0.9em; color: #666; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 th:text="${user.id} ? 'Edit User' : 'Create New User'">Create New User</h1>
+        
+        <form th:action="@{/users}" th:object="${user}" method="post">
+            <input type="hidden" th:field="*{id}" /> 
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" th:field="*{username}" required/>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required/>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" th:placeholder="${user.id} ? 'Leave blank to keep current password' : ''" th:required="${user.id == null}"/>
+            <p class="note" th:if="${user.id}">Leave password blank to keep the current password</p>
+            
+            <label for="role">Role:</label>
+            <select id="role" th:field="*{role}">
+                <option value="ROLE_USER">User</option>
+                <option value="ROLE_ADMIN">Admin</option>
+            </select>
+            
+            <button type="submit">Save User</button>
+        </form>
+        
+        <a th:href="@{/admin/users}" class="back-link">← Back to User List</a>
+    </div>
+</body>
+</html>

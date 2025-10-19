@@ -182,7 +182,7 @@ e-commerce/
 
 - **Java:** Version 21 or higher
 - **Maven:** Version 3.6 or higher
-- **IDE:** IntelliJ IDEA / Eclipse / VS Code (recommended)
+- **IDE:**  Eclipse 
 - **Browser:** Modern web browser (Chrome, Firefox, Edge)
 - **Memory:** Minimum 2GB RAM
 - **Disk Space:** 500MB free space
